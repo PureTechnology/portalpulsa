@@ -1,0 +1,11 @@
+{
+    "name": "puretechnology/portalpulsa",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Agastiya S. Mohammad",
+            "email": "egi@pure-technology.net"
+        }
+    ],
+    "require": {}
+}
