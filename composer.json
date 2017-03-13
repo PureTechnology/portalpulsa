@@ -7,5 +7,10 @@
             "email": "egi@pure-technology.net"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "PureTechnology\\portalpulsa\\": "src"
+        }
+    }
 }
