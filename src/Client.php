@@ -77,7 +77,7 @@ final class Client
         if (is_string($product)) {
             $product = strtoupper($product);
         } elseif (is_array($product)) {
-            $product = Product::getByMsisdn($product, $phone);
+            $product = Product::match($product, new Msisdn($phone));
             if ($product === false) return;
         }
 
