@@ -7,11 +7,6 @@ namespace PureTechnology\portalpulsa;
 final class Client
 {
     private static $valid_banks = ['bca', 'bni', 'mandiri', 'bri', 'muamalat'];
-    private static $valid_product_groups = [
-        'S',   'AX', 'AXD', 'BO',  'C',    'N',   'P',   'I',  'IDN', 'IDX',
-        'IFC', 'IS', 'ITR', 'SM',  'SPIN', 'S',   'STG', 'TS', 'STR', 'T',
-        'TD',  'X',  'BBX', 'XCX', 'XH',   'XHE', 'PLN'
-    ];
 
     private $loginByFacebookUrl = 'http://portalpulsa.com/api/connect/';
     private $uid;
@@ -61,7 +56,7 @@ final class Client
 
     public function getProductPrice($product_group) {
         $product_group = strtoupper($product_group);
-        if (!in_array($product_group, self::$valid_product_groups)) {
+        if (!in_array($product_group, Product::$valid_groups)) {
             return false;
         }
 
@@ -79,9 +74,16 @@ final class Client
     }
 
     public function buyTopup($product, $phone, $trxid, $daynum) {
+        if (is_string($product)) {
+            $product = strtoupper($product);
+        } elseif (is_array($product)) {
+            $product = Product::getByMsisdn($product, $phone);
+            if ($product === false) return;
+        }
+
         return $this->send($this->bag->push([
             'inquiry' => 'I',
-            'code'    => strtoupper($product),
+            'code'    => $product,
             'phone'   => $phone,
         ]));
     }
