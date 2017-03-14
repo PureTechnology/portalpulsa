@@ -1,6 +1,6 @@
 <?php
 
-// src/Transaction.php
+// src/AbstractQueue.php
 
 namespace PureTechnology\portalpulsa;
 
@@ -20,7 +20,7 @@ namespace PureTechnology\portalpulsa;
  ENGINE = MyISAM
  AUTO_INCREMENT = 1;
  */
-abstract class Transaction
+abstract class AbstractQueue
 {
     public function push($params) {
         return array_merge($params, [ 'trxid_api' => uniqid(), 'no' => 'yyy' ]);

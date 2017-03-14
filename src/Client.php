@@ -12,13 +12,13 @@ final class Client
     private $uid;
     private $key;
     private $secret;
-    private $bag;
+    private $queue;
 
-    public function __construct($uid, $key, $secret, Transaction $bag) {
+    public function __construct($uid, $key, $secret, AbstractQueue $queue) {
         $this->uid = $uid;
         $this->key = $key;
         $this->secret = $secret;
-        $this->bag = $bag;
+        $this->queue = $queue;
     }
 
     private function send($data) {
@@ -81,7 +81,7 @@ final class Client
             if ($product === false) return;
         }
 
-        return $this->send($this->bag->push([
+        return $this->send($this->queue->push([
             'inquiry' => 'I',
             'code'    => $product,
             'phone'   => $phone,
@@ -89,7 +89,7 @@ final class Client
     }
 
     public function buyToken($product, $phone, $idcust, $trxid, $daynum) {
-        return $this->send($this->bag->push([
+        return $this->send($this->queue->push([
             'inquiry' => 'PLN',
             'code'    => strtoupper($product),
             'phone'   => $phone,
