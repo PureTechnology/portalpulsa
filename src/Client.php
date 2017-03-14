@@ -73,13 +73,16 @@ final class Client
         ]);
     }
 
-    public function buyTopup($product, $phone, $trxid, $daynum) {
+    public function buyTopup($product, $phone) {
         if (is_string($product)) {
-            $product = strtoupper($product);
+            $product = Product::match(explode(',', $product), new Msisdn($phone));
         } elseif (is_array($product)) {
             $product = Product::match($product, new Msisdn($phone));
-            if ($product === false) return;
+        } else {
+            return false;
         }
+
+        if ($product === false) return false;
 
         return $this->send($this->queue->push([
             'inquiry' => 'I',
@@ -88,7 +91,7 @@ final class Client
         ]));
     }
 
-    public function buyToken($product, $phone, $idcust, $trxid, $daynum) {
+    public function buyToken($product, $phone, $idcust) {
         return $this->send($this->queue->push([
             'inquiry' => 'PLN',
             'code'    => strtoupper($product),

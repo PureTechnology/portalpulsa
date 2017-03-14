@@ -397,7 +397,7 @@ final class Msisdn
             throw new \Exception('Invalid format');
         }
 
-        if ($k=array_search(substr($msisdn, $country_start_pos, 4), $this->country_codes)) {
+        if       ($k=array_search(substr($msisdn, $country_start_pos, 4), $this->country_codes)) {
             $country_length = 4;
         } elseif ($k=array_search(substr($msisdn, $country_start_pos, 3), $this->country_codes)) {
             $country_length = 3;
