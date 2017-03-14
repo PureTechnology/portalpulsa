@@ -1,8 +1,10 @@
 <?php
 
+namespace PureTechnology\portalpulsa\Test;
+
 use PureTechnology\portalpulsa\Msisdn;
 
-class MsisdnTest extends PHPUnit_Framework_TestCase {
+class MsisdnTest extends \PHPUnit_Framework_TestCase {
     public function testInternational()
     {
         $m = new Msisdn('+628121041620');

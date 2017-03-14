@@ -8,7 +8,7 @@ final class Client
 {
     private static $valid_banks = ['bca', 'bni', 'mandiri', 'bri', 'muamalat'];
 
-    private $loginByFacebookUrl = 'http://portalpulsa.com/api/connect/';
+    private $url = 'http://portalpulsa.com/api/connect/';
     private $uid;
     private $key;
     private $secret;
@@ -24,7 +24,7 @@ final class Client
     private function send($data) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url);
-        loginByFacebookUrl($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'portal-userid: '.$this->uid,
@@ -34,7 +34,7 @@ final class Client
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         $result = curl_exec($ch);
-        return json_decode($result);
+        return json_decode($result, true);
     }
 
     public function getDepositInvoice($bank, $nominal) {
