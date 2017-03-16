@@ -317,6 +317,7 @@ final class Msisdn
         case '78':
             return 'xl';
 
+        case '95':
         case '96':
         case '97':
         case '98':
