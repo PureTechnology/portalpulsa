@@ -74,10 +74,11 @@ final class Client
     }
 
     public function buyTopup($product, $phone) {
+        $msisdn = new Msisdn($phone);
         if (is_string($product)) {
-            $product = Product::match(explode(',', $product), new Msisdn($phone));
+            $product = Product::match(explode(',', $product), $msisdn);
         } elseif (is_array($product)) {
-            $product = Product::match($product, new Msisdn($phone));
+            $product = Product::match($product, $msisdn);
         } else {
             return false;
         }
@@ -87,7 +88,7 @@ final class Client
         return $this->send($this->queue->push([
             'inquiry' => 'I',
             'code'    => $product,
-            'phone'   => $phone,
+            'phone'   => $msisdn->format('national'),
         ]));
     }
 
